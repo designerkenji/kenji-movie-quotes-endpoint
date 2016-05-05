@@ -1,14 +1,12 @@
 
 import endpoints
-from protorpc import message_types
-from protorpc import messages
-from protorpc import remote
+import protorpc
 
 from models import MovieQuote
 import main
 
 @endpoints.api(name="moviequotes", version="v1", description="Movie QUotes API")
-class MovieQuotesApi(remote.Service):
+class MovieQuotesApi(protorpc.remote.Service):
     pass
 
     #Methods returns a single object or query methods return a collection
@@ -17,7 +15,6 @@ class MovieQuotesApi(remote.Service):
         my_quote = MovieQuote(parent=main.PARENT_KEY, quote=request.quote, movie=request.movie)
         my_quote.put()
         #one way to get parent key
-        
         #request.put()
         #no parent key here
         return request
