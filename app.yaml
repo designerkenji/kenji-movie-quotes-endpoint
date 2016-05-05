@@ -8,14 +8,17 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
-
+- url: /_ah/spi/.*
+  script: movie_quotes_api.app
 - url: .*
   script: main.app
 
 libraries:
 - name: webapp2
   version: "2.5.2"
-- name:endpoints
+- name: endpoints
   version: latest
 - name: jinja2
   version: latest
+  
+  #http://yaml-online-parser.appspot.com/
