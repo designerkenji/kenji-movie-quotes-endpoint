@@ -12,8 +12,11 @@ class MovieQuotesApi(protorpc.remote.Service):
     #Methods returns a single object or query methods return a collection
     @MovieQuote.method(name="moviequote.insert", path="moviequote/insert", http_method="POST")
     def moviequote_insert(self, request):
-        """ insert a quote """
-        my_quote = MovieQuote(parent=main.PARENT_KEY, quote=request.quote, movie=request.movie)
+        """ insert or update a quote """
+        if request.from_datastore:
+            my_quote = request
+        else:
+            my_quote = MovieQuote(parent=main.PARENT_KEY, quote=request.quote, movie=request.movie)
         my_quote.put()
         #one way to get parent key
         #request.put()
