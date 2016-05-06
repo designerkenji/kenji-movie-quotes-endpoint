@@ -31,4 +31,15 @@ class MovieQuotesApi(protorpc.remote.Service):
         """ get all quotes """
         return query
     
+    @MovieQuote.method(request_fields = ("entityKey",),
+                       name="moviequote.delete",
+                       path="moviequote/delete/{entityKey}",
+                       http_method="DELETE")
+    def moviequote_delete(self, request):
+        """ delete a quote if it is there """
+        if not request.from_datastore:
+            raise endpoints.NotFoundException("movie quote to be deleted not found")
+        request.key.delete()
+        return MovieQuote(quote="deleted")
+    
 app = endpoints.api_server([MovieQuotesApi], restricted = False)
